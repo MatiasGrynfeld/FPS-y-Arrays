@@ -4,12 +4,22 @@ using UnityEngine;
 
 public class OBJETOMANAGER : MonoBehaviour
 {
-    public int index = 0;
+    int index = -1;
     public objetoBehaviour[] objetos;
     void Start()
     {
         deactivateAll();
-        InvokeRepeating(nameof(activateNext), 1, 3);
+    }
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.D))
+        {
+            activateNext();
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            activatePrevious();
+        }
     }
     public void deactivateAll()
     {
@@ -22,11 +32,22 @@ public class OBJETOMANAGER : MonoBehaviour
     public void activateNext()
     {
         deactivateAll();
-        objetos[index].gameObject.SetActive(true);
         index++;
         if (index == objetos.Length)
         {
             index = 0;
         }
+        objetos[index].gameObject.SetActive(true); 
+    }
+
+    public void activatePrevious()
+    {
+        deactivateAll();
+        index--;
+        if (index < 0)
+        {
+            index = objetos.Length - 1;
+        }
+        objetos[index].gameObject.SetActive(true);
     }
 }
